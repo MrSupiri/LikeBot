@@ -1,0 +1,33 @@
+import twitter
+from datetime import datetime
+import time
+from random import choice
+
+# noinspection SpellCheckingInspection
+api = twitter.Api(consumer_key='',
+                  consumer_secret='',
+                  access_token_key='',
+                  access_token_secret='')
+
+while True:
+	hashtag = choice(api.GetTrendsWoeid(23424977)).name.strip('#')
+
+    q = "f=tweets&vertical=news&q=%23{}".format(hashtag)
+    tweets = api.GetSearch(raw_query=q)
+    i = 0
+    for tweet in tweets:
+        # noinspection PyBroadException
+        try:
+        	if i == 6:
+        		break
+            t = datetime.utcnow().timestamp() - datetime.strptime(tweet.AsDict()['created_at'],
+                                                                  '%a %b %d %X %z %Y').timestamp()
+            f2f = int(tweet.AsDict()['user']['friends_count']) / int(tweet.AsDict()['user']['followers_count'])
+            if tweet.AsDict()['lang'] == 'en' and t < 300 and f2f <= 1.7:
+                print(tweet.AsDict()['id'],'\t',tweet.AsDict()['text'],)
+                api.CreateFavorite(status_id=tweet.AsDict()['id'])
+                i += 1
+            	time.sleep(5)
+        except:
+            continue
+    time.sleep(300)
