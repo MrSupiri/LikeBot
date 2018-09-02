@@ -7,7 +7,6 @@ from _thread import start_new_thread
 
 analyzer = SentimentIntensityAnalyzer()
 
-# noinspection SpellCheckingInspection
 api = twitter.Api(consumer_key='',
                   consumer_secret='',
                   access_token_key='',
@@ -121,5 +120,5 @@ def likeTweets():
 
 
 if __name__ == "__main__":
-    thread2 = start_new_thread(likeTweets, ())
+    _ = start_new_thread(likeTweets, ())
     streamTweets()
