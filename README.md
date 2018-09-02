@@ -8,3 +8,5 @@ You Need to have following packages::
     $ pip install vaderSentiment
 
 Then You need create a twitter app at https://apps.twitter.com and take authorization keys and add that to the code
+# Run
+    $ screen -dmS twitter-bot python3 auto_favorite.py
